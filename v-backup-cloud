@@ -1,0 +1,50 @@
+#!/bin/bash
+# info: backup all users
+# options: NONE
+#
+# The function backups all system users.
+
+
+#----------------------------------------------------------#
+#                    Variable&Function                     #
+#----------------------------------------------------------#
+
+# Importing system enviroment  as we run this script 
+# mostly by cron wich not read it by itself
+source /etc/profile
+
+# Includes
+source $VESTA/func/main.sh
+source $VESTA/conf/vesta.conf
+
+
+#----------------------------------------------------------#
+#                       Action                             #
+#----------------------------------------------------------#
+
+
+
+DATE=$(date +%F)
+
+if [ $1 = 'monthly' ]; then
+    /usr/local/bin/ydcmd clean app:/monthly/ --type=file --keep=70d
+    for user in $(ls $VESTA/data/users); do
+        backup=/backup/monthly/$user.$DATE.tar
+
+        if [ -e "$backup" ]; then
+            /usr/local/bin/ydcmd put $backup app:/monthly/
+            rm $backup
+        fi;
+    done
+fi;
+
+/usr/local/bin/ydcmd put /backup/daily app:/daily --rsync --quiet
+
+#----------------------------------------------------------#
+#                       Vesta                              #
+#----------------------------------------------------------#
+
+# No Logging
+#log_event "$OK" "$EVENT"
+
+exit

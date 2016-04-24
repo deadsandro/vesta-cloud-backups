@@ -38,7 +38,15 @@ if [ $1 = 'monthly' ]; then
     done
 fi;
 
-/usr/local/bin/ydcmd put /backup/daily app:/daily --rsync --quiet
+/usr/local/bin/ydcmd clean app:/daily/ --type=file --keep=30d --quiet
+for user in $(ls $VESTA/data/users); do
+backup=/backup/daily/$user.$DATE.tar
+
+if [ -e "$backup" ]; then
+    /usr/local/bin/ydcmd put $backup app:/daily/
+fi;
+done
+
 
 #----------------------------------------------------------#
 #                       Vesta                              #

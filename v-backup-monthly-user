@@ -107,12 +107,6 @@ if [ -e "$USER_DATA/history.log" ]; then
     cp -r $USER_DATA/history.log $tmpdir/vesta/
 fi
 
-if [ -e "$USER_DATA/backup-excludes.conf" ]; then
-    echo -e "$(date "+%F %T") backup-excludes.conf"
-    msg="$msg\n$(date "+%F %T") backup-excludes.conf"
-    cp -r $USER_DATA/backup-excludes.conf $tmpdir/vesta/
-fi
-
 # Backup PAM
 mkdir $tmpdir/pam
 echo -e "$(date "+%F %T") pam"

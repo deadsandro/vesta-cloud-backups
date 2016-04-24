@@ -22,7 +22,6 @@ source $VESTA/func/domain.sh
 source $VESTA/func/db.sh
 source $VESTA/conf/vesta.conf
 
-BACKUP=/backup/monthly
 
 #----------------------------------------------------------#
 #                    Verifications                         #
@@ -123,6 +122,10 @@ grep "^$user:" /etc/group > $tmpdir/pam/group
 echo
 msg="$msg\n"
 
+# Parsing excludes
+if [ -e "$USER_DATA/backup-excludes.conf" ]; then
+    source $USER_DATA/backup-excludes.conf
+fi
 
 # WEB domains
 if [ ! -z "$WEB_SYSTEM" ] && [ "$WEB" != '*' ]; then

@@ -1,2 +1,2 @@
-28 6 10 * * sudo /usr/local/vesta/bin/v-backup-monthly-users && sudo /usr/local/vesta/bin/v-backup-cloud monthly
-10 05 * * * sudo /usr/local/vesta/bin/v-backup-users && sudo /usr/local/vesta/bin/v-backup-cloud daily
+28 6 10 * * sudo /usr/local/vesta/bin/v-backup-full-users
+10 05 * * * sudo /usr/local/vesta/bin/v-backup-users && sudo /usr/local/vesta/bin/v-backup-daily-cloud-yandex

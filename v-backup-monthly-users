@@ -35,16 +35,16 @@ for user in $(ls $VESTA/data/users); do
         echo -e "================================" >> $log
         echo -e "$user" >> $log
         echo -e "--------------------------------\n" >> $log
-        $BIN/v-backup-full-user $user >> $log 2>&1
+        $BIN/v-backup-monthly-user $user >> $log 2>&1
         echo -e "\n--------------------------------\n\n" >> $log
     fi
 
     DATE=$(date +%F)
-
     backup=/backup/monthly/$user.$DATE.tar
     if [ -e "$backup" ]; then
-        /usr/local/bin/ydcmd put $backup app:/monthly/
-        rm $backup
+        mv $backup $backup.zzz
+        /usr/local/bin/ydcmd put $backup.zzz app:/monthly/ --retries=1
+        rm $backup.zzz
     fi;
 done
 
